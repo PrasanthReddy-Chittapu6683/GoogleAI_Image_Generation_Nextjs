@@ -1,36 +1,91 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Image Generation Next.js App
 
-## Getting Started
+AI-powered photo editing application built with Next.js 15, TypeScript, and Google Gemini AI.
 
-First, run the development server:
+## Features
 
+- Upload images and generate AI-enhanced versions using natural language prompts
+- Google Gemini 2.5 Flash integration for image generation
+- Modern UI with Tailwind CSS and Radix UI components
+- Responsive design with dark/light theme support
+- Image history and download functionality
+
+## Setup
+
+1. Install dependencies:
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm install
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+2. Create a `.env.local` file in the root directory:
+```env
+GOOGLE_GENERATIVE_AI_API_KEY=your_google_ai_api_key_here
+```
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+3. Get your Google AI API key from [Google AI Studio](https://aistudio.google.com/)
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+4. Run the development server:
+```bash
+npm run dev
+```
 
-## Learn More
+5. Open [http://localhost:3000](http://localhost:3000) in your browser.
 
-To learn more about Next.js, take a look at the following resources:
+## Scripts
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- `npm run dev` - Start development server
+- `npm run build` - Build for production
+- `npm run start` - Start production server
+- `npm run lint` - Run ESLint
+- `npm run type-check` - Run TypeScript type checking
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Tech Stack
 
-## Deploy on Vercel
+- **Framework**: Next.js 15 with App Router
+- **Language**: TypeScript
+- **Styling**: Tailwind CSS
+- **UI Components**: Radix UI primitives
+- **AI Integration**: Vercel AI SDK with Google Gemini
+- **Icons**: Lucide React
+- **Animations**: Framer Motion
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Project Structure
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+```
+src/
+├── app/
+│   ├── api/
+│   │   └── generate-image/
+│   │       └── route.ts          # API route for image generation
+│   ├── studio/
+│   │   └── page.tsx              # Studio page
+│   ├── globals.css               # Global styles
+│   ├── layout.tsx                # Root layout
+│   └── page.tsx                  # Home page
+├── components/
+│   ├── backgrounds/
+│   │   └── grid.tsx              # Grid pattern background
+│   └── ui/                       # UI components
+│       ├── button.tsx
+│       ├── card.tsx
+│       ├── input.tsx
+│       └── textarea.tsx
+└── lib/
+    └── utils.ts                  # Utility functions
+```
+
+## Usage
+
+1. Navigate to the home page and click "Go to Studio"
+2. Upload an image using the file input
+3. Enter a text prompt describing what you want to generate
+4. Click "Generate" to create an AI-enhanced version
+5. Download the generated image or view it in the history
+
+## Environment Variables
+
+- `GOOGLE_GENERATIVE_AI_API_KEY`: Your Google AI API key for image generation
+
+## License
+
+MIT
