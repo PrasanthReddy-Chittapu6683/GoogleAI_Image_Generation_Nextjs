@@ -61,6 +61,25 @@ export async function POST(request: NextRequest) {
     // Extract generated image from response
     const generatedImageUrl = `data:${image.type};base64,${result.files[0].base64}`
 
+    // Track usage (estimate tokens based on prompt length)
+    const estimatedTokens = Math.max(100, prompt.length * 1.5) // Rough estimation
+    try {
+      await fetch(`${process.env.NEXTAUTH_URL || 'http://localhost:3000'}/api/usage`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          model,
+          tokensUsed: estimatedTokens,
+          requestType: 'image-generation'
+        })
+      })
+    } catch (usageError) {
+      console.error('Failed to track usage:', usageError)
+      // Don't fail the request if usage tracking fails
+    }
+
     return NextResponse.json({ 
       generatedImage: generatedImageUrl,
       error: null 

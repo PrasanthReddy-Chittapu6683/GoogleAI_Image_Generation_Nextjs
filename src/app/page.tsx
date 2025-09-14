@@ -29,6 +29,9 @@ export default function HomePage() {
             </div>
             <nav className="flex items-center space-x-2">
               <ThemeToggle />
+              <Link href="/usage" className="text-sm text-muted-foreground hover:text-foreground">
+                Usage & Billing
+              </Link>
               <Link href="/studio" className={buttonVariants({ variant: "default", size: "sm" })}>
                 <span>Launch Studio</span>
                 <ArrowRight className="ml-2 h-4 w-4" />
