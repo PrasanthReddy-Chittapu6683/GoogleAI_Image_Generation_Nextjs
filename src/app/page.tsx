@@ -1,45 +1,18 @@
 'use client'
 
 import Link from 'next/link'
-import Image from 'next/image'
 import { GridPattern } from '@/components/backgrounds/grid'
+import { Header } from '@/components/layout/header'
+import { Footer } from '@/components/layout/footer'
 import { Button, buttonVariants } from '@/components/ui/button'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { cn } from '@/lib/utils'
-import { ArrowRight, Brain, ImageIcon, Palette, Zap, Github, Linkedin, ExternalLink } from 'lucide-react'
-import { ThemeToggle } from '@/components/theme-toggle'
+import { ArrowRight, Brain, ImageIcon, Palette, Zap } from 'lucide-react'
 
 export default function HomePage() {
   return (
     <div className="min-h-screen flex flex-col">
-      {/* Header */}
-      <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-        <div className="container flex h-14 items-center">
-          <div className="mr-4 hidden md:flex">
-            <Link className="mr-6 flex items-center space-x-2" href="/">
-              <Brain className="h-6 w-6" />
-              <span className="hidden font-bold sm:inline-block">AI Image Studio</span>
-            </Link>
-          </div>
-          <div className="flex flex-1 items-center justify-between space-x-2 md:justify-end">
-            <div className="w-full flex-1 md:w-auto md:flex-none">
-              <Button variant="ghost" className="md:hidden">
-                <Brain className="h-6 w-6" />
-              </Button>
-            </div>
-            <nav className="flex items-center space-x-2">
-              <ThemeToggle />
-              <Link href="/usage" className="text-sm text-muted-foreground hover:text-foreground">
-                Usage & Billing
-              </Link>
-              <Link href="/studio" className={buttonVariants({ variant: "default", size: "sm" })}>
-                <span>Launch Studio</span>
-                <ArrowRight className="ml-2 h-4 w-4" />
-              </Link>
-            </nav>
-          </div>
-        </div>
-      </header>
+      <Header />
 
       {/* Hero Section */}
       <section className="relative flex-1 flex items-center overflow-hidden">
@@ -196,74 +169,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Footer */}
-      <footer className="border-t bg-background">
-        <div className="container px-4 md:px-6 py-12">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div>
-              <div className="flex items-center space-x-2 mb-4">
-                <Brain className="h-6 w-6 text-primary" />
-                <span className="font-bold">AI Image Studio</span>
-              </div>
-              <p className="text-sm text-muted-foreground">
-                Transform your images with the power of Google's advanced AI models. 
-                Create stunning visuals with multiple AI models at your fingertips.
-              </p>
-            </div>
-            
-            <div>
-              <h3 className="font-semibold mb-4">Developer</h3>
-              <p className="text-sm text-muted-foreground mb-2">Prasanth Reddy CV</p>
-              <p className="text-sm text-muted-foreground">
-                Technology specialist with 14+ years of experience in React, Next.js, 
-                Angular, TypeScript, and AI/ML technologies.
-              </p>
-            </div>
-            
-            <div>
-              <h3 className="font-semibold mb-4">Connect</h3>
-              <div className="flex space-x-4">
-                <Link 
-                  href="https://github.com/PrasanthReddy-Chittapu6683/" 
-                  target="_blank" 
-                  rel="noopener noreferrer"
-                  className="flex items-center text-sm text-muted-foreground hover:text-primary transition-colors"
-                >
-                  <Github className="h-4 w-4 mr-2" />
-                  GitHub
-                  <ExternalLink className="h-3 w-3 ml-1" />
-                </Link>
-                <Link 
-                  href="https://www.linkedin.com/in/prasanth-kumar-reddy-cv-385768b5" 
-                  target="_blank" 
-                  rel="noopener noreferrer"
-                  className="flex items-center text-sm text-muted-foreground hover:text-primary transition-colors"
-                >
-                  <Linkedin className="h-4 w-4 mr-2" />
-                  LinkedIn
-                  <ExternalLink className="h-3 w-3 ml-1" />
-                </Link>
-                <Link 
-                  href="https://cvpkr-portfolio.web.app" 
-                  target="_blank" 
-                  rel="noopener noreferrer"
-                  className="flex items-center text-sm text-muted-foreground hover:text-primary transition-colors"
-                >
-                  <ExternalLink className="h-4 w-4 mr-2" />
-                  Portfolio
-                  <ExternalLink className="h-3 w-3 ml-1" />
-                </Link>
-              </div>
-            </div>
-          </div>
-          
-          <div className="border-t mt-8 pt-8 text-center">
-            <p className="text-sm text-muted-foreground">
-              © 2024 Prasanth Reddy CV. Built with Next.js, React, and Google AI.
-            </p>
-          </div>
-        </div>
-      </footer>
+      <Footer />
     </div>
   )
 }

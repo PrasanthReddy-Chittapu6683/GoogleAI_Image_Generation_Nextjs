@@ -4,7 +4,8 @@ import { useState, useEffect } from 'react'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Progress } from '@/components/ui/progress'
-import { ThemeToggle } from '@/components/theme-toggle'
+import { Header } from '@/components/layout/header'
+import { Footer } from '@/components/layout/footer'
 import { 
   TrendingUp, 
   DollarSign, 
@@ -111,32 +112,8 @@ export default function UsagePage() {
   }
 
   return (
-    <div className="min-h-screen bg-background">
-      {/* Header */}
-      <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-        <div className="container flex h-14 items-center">
-          <div className="mr-4 flex">
-            <Link className="mr-6 flex items-center space-x-2" href="/">
-              <Brain className="h-6 w-6" />
-              <span className="font-bold">AI Image Studio</span>
-            </Link>
-            <nav className="flex items-center space-x-4 text-sm font-medium">
-              <Link href="/" className="text-muted-foreground hover:text-foreground">
-                Home
-              </Link>
-              <Link href="/studio" className="text-muted-foreground hover:text-foreground">
-                Studio
-              </Link>
-              <Link href="/usage" className="text-foreground">
-                Usage & Billing
-              </Link>
-            </nav>
-          </div>
-          <div className="flex flex-1 items-center justify-end space-x-2">
-            <ThemeToggle />
-          </div>
-        </div>
-      </header>
+    <div className="min-h-screen flex flex-col">
+      <Header />
 
       <div className="container mx-auto px-4 py-8">
         <div className="mb-8">
@@ -340,6 +317,8 @@ export default function UsagePage() {
           </Link>
         </div>
       </div>
+      
+      <Footer />
     </div>
   )
 }
