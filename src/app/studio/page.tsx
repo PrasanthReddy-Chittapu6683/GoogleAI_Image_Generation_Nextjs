@@ -39,6 +39,56 @@ export default function StudioPage() {
     }
   }
 
+  const downloadImage = (imageUrl: string, filename: string) => {
+    try {
+      // Convert data URL to blob for better mobile support
+      const canvas = document.createElement('canvas')
+      const ctx = canvas.getContext('2d')
+      const img = new window.Image()
+      
+      img.onload = () => {
+        canvas.width = img.width
+        canvas.height = img.height
+        ctx?.drawImage(img, 0, 0)
+        
+        canvas.toBlob((blob) => {
+          if (blob) {
+            const blobUrl = URL.createObjectURL(blob)
+            
+            // Create a temporary anchor element
+            const link = document.createElement('a')
+            link.href = blobUrl
+            link.download = filename
+            
+            // For mobile devices, try to trigger download
+            if (navigator.userAgent.match(/iPhone|iPad|iPod|Android/i)) {
+              // On mobile, open the blob URL
+              window.open(blobUrl, '_blank')
+              // Also try to trigger download
+              document.body.appendChild(link)
+              link.click()
+              document.body.removeChild(link)
+            } else {
+              // Desktop browsers
+              document.body.appendChild(link)
+              link.click()
+              document.body.removeChild(link)
+            }
+            
+            // Clean up the blob URL after a delay
+            setTimeout(() => URL.revokeObjectURL(blobUrl), 1000)
+          }
+        }, 'image/png')
+      }
+      
+      img.src = imageUrl
+    } catch (error) {
+      console.error('Download failed:', error)
+      // Fallback: open in new tab
+      window.open(imageUrl, '_blank')
+    }
+  }
+
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     setIsGenerating(true)
@@ -150,13 +200,12 @@ export default function StudioPage() {
                       unoptimized
                     />
                   </div>
-                  <a
-                    href={generatedImage}
-                    download={`generated-image-${Date.now()}.png`}
-                    className={buttonVariants({ variant: 'outline' })}
+                  <Button
+                    onClick={() => downloadImage(generatedImage, `generated-image-${Date.now()}.png`)}
+                    variant="outline"
                   >
                     Download
-                  </a>
+                  </Button>
                 </div>
               ) : (
                 <div className="flex items-center justify-center h-64">
@@ -184,13 +233,13 @@ export default function StudioPage() {
                 </div>
               </CardHeader>
               <CardContent>
-                <a
-                  href={item.base64}
-                  download={`generated-image-${Date.now()}.png`}
-                  className={buttonVariants({ variant: 'outline', size: 'sm' })}
+                <Button
+                  onClick={() => downloadImage(item.base64, `generated-image-${Date.now()}.png`)}
+                  variant="outline"
+                  size="sm"
                 >
                   Download
-                </a>
+                </Button>
               </CardContent>
             </Card>
           ))}
