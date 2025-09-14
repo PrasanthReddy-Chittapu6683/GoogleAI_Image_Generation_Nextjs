@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import Image from 'next/image'
 import { Button, buttonVariants } from '@/components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Input } from '@/components/ui/input'
@@ -77,7 +78,17 @@ export default function StudioPage() {
             <CardTitle>Image upload</CardTitle>
           </CardHeader>
           <CardContent>
-            {preview && <img src={preview} alt="Preview" className="mb-4 rounded-xl" />}
+            {preview && (
+              <div className="mb-4 relative w-full h-64">
+                <Image
+                  src={preview}
+                  alt="Preview"
+                  fill
+                  className="rounded-xl object-cover"
+                  unoptimized
+                />
+              </div>
+            )}
             <form onSubmit={handleSubmit} encType="multipart/form-data">
               <Input type="file" name="image" onChange={handleFileChange} accept="image/*" />
               <Textarea name="prompt" className="mt-2" placeholder="Describe what you want to generate..." />
@@ -96,7 +107,15 @@ export default function StudioPage() {
             <div className="p-4 border rounded-xl flex-1 flex items-center justify-center">
               {generatedImage ? (
                 <div>
-                  <img src={generatedImage} alt="Generated image" className="mb-4 rounded-xl" />
+                  <div className="mb-4 relative w-full h-64">
+                    <Image
+                      src={generatedImage}
+                      alt="Generated image"
+                      fill
+                      className="rounded-xl object-cover"
+                      unoptimized
+                    />
+                  </div>
                   <a
                     href={generatedImage}
                     download={`generated-image-${Date.now()}.png`}
@@ -119,7 +138,15 @@ export default function StudioPage() {
           {history.map((item) => (
             <Card key={item.id}>
               <CardHeader>
-                <img src={item.base64} alt="Generated image" />
+                <div className="relative w-full h-32">
+                  <Image
+                    src={item.base64}
+                    alt="Generated image"
+                    fill
+                    className="object-cover rounded"
+                    unoptimized
+                  />
+                </div>
               </CardHeader>
               <CardContent>
                 <a
