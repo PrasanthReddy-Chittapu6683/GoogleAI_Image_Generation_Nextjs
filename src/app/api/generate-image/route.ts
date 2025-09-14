@@ -4,6 +4,16 @@ import { NextRequest, NextResponse } from 'next/server'
 
 export async function POST(request: NextRequest) {
   try {
+    // Check if API key is available
+    const apiKey = process.env.GOOGLE_GENERATIVE_AI_API_KEY
+    if (!apiKey) {
+      console.error('GOOGLE_GENERATIVE_AI_API_KEY environment variable is not set')
+      return NextResponse.json(
+        { error: 'API key not configured' },
+        { status: 500 }
+      )
+    }
+
     const formData = await request.formData()
     const image = formData.get('image') as File
     const prompt = formData.get('prompt') as string
@@ -42,9 +52,24 @@ export async function POST(request: NextRequest) {
     })
   } catch (error) {
     console.error('Error generating image:', error)
+    
+    // Provide more specific error messages
+    let errorMessage = 'Failed to generate image'
+    if (error instanceof Error) {
+      if (error.message.includes('API key')) {
+        errorMessage = 'Invalid API key or API key not set'
+      } else if (error.message.includes('quota')) {
+        errorMessage = 'API quota exceeded'
+      } else if (error.message.includes('network')) {
+        errorMessage = 'Network error - please try again'
+      } else {
+        errorMessage = `Error: ${error.message}`
+      }
+    }
+    
     return NextResponse.json(
       { 
-        error: 'Failed to generate image',
+        error: errorMessage,
         generatedImage: null 
       },
       { status: 500 }
