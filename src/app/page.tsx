@@ -7,6 +7,7 @@ import { Button, buttonVariants } from '@/components/ui/button'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { cn } from '@/lib/utils'
 import { ArrowRight, Brain, ImageIcon, Palette, Zap, Github, Linkedin, ExternalLink } from 'lucide-react'
+import { ThemeToggle } from '@/components/theme-toggle'
 
 export default function HomePage() {
   return (
@@ -26,7 +27,8 @@ export default function HomePage() {
                 <Brain className="h-6 w-6" />
               </Button>
             </div>
-            <nav className="flex items-center">
+            <nav className="flex items-center space-x-2">
+              <ThemeToggle />
               <Link href="/studio" className={buttonVariants({ variant: "default", size: "sm" })}>
                 <span>Launch Studio</span>
                 <ArrowRight className="ml-2 h-4 w-4" />

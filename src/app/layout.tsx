@@ -1,12 +1,13 @@
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import './globals.css'
+import { ThemeProvider } from '@/components/theme-provider'
 
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
-  title: 'Image Editor Studio',
-  description: 'AI-powered photo editing application',
+  title: 'AI Image Studio',
+  description: 'Transform your images with the power of Google\'s advanced AI models',
 }
 
 export default function RootLayout({
@@ -15,9 +16,16 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en" className="antialiased min-h-screen h-screen" style={{ colorScheme: 'dark' }} data-theme={'dark'}>
+    <html lang="en" suppressHydrationWarning>
       <body className={`${inter.className} min-h-screen h-screen flex flex-col`}>
-        {children}
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
+          {children}
+        </ThemeProvider>
       </body>
     </html>
   )

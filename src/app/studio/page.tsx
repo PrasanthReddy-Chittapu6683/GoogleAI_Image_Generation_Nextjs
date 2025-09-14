@@ -8,6 +8,7 @@ import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 import { Loader2Icon } from 'lucide-react'
+import { ThemeToggle } from '@/components/theme-toggle'
 
 // In-memory storage for demo purposes
 // In a real app, this would be stored in a database
@@ -132,7 +133,10 @@ export default function StudioPage() {
 
   return (
     <div className="p-6 flex-1 flex flex-col max-w-7xl mx-auto w-full">
-      <h1 className="text-4xl font-bold mb-6">Studio</h1>
+      <div className="flex justify-between items-center mb-6">
+        <h1 className="text-4xl font-bold">Studio</h1>
+        <ThemeToggle />
+      </div>
 
       <div className="grid md:grid-cols-2 gap-4">
         <Card>
