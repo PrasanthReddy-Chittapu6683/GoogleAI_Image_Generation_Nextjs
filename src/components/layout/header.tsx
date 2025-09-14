@@ -25,6 +25,9 @@ export function Header({ showCta = true }: HeaderProps) {
             <Link href="/studio" className="text-muted-foreground hover:text-foreground">
               Studio
             </Link>
+            <Link href="/editor" className="text-muted-foreground hover:text-foreground">
+              Editor
+            </Link>
             <Link href="/usage" className="text-muted-foreground hover:text-foreground">
               Usage & Billing
             </Link>
