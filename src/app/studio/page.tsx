@@ -6,17 +6,26 @@ import { Button, buttonVariants } from '@/components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 import { Loader2Icon } from 'lucide-react'
 
 // In-memory storage for demo purposes
 // In a real app, this would be stored in a database
 let history: { id: string; base64: string }[] = []
 
+// Available Google AI models for image generation
+const AI_MODELS = [
+  { value: 'gemini-2.5-flash-image-preview', label: 'Gemini 2.5 Flash (Banana Model)', description: 'Latest model with enhanced image generation' },
+  { value: 'gemini-1.5-flash', label: 'Gemini 1.5 Flash', description: 'Fast and efficient image generation' },
+  { value: 'gemini-1.5-pro', label: 'Gemini 1.5 Pro', description: 'High-quality image generation with advanced capabilities' }
+]
+
 export default function StudioPage() {
   const [preview, setPreview] = useState<string | null>(null)
   const [generatedImage, setGeneratedImage] = useState<string | null>(null)
   const [isGenerating, setIsGenerating] = useState(false)
   const [error, setError] = useState<string | null>(null)
+  const [selectedModel, setSelectedModel] = useState<string>('gemini-2.5-flash-image-preview') // Default to Banana model
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0]
@@ -44,6 +53,9 @@ export default function StudioPage() {
       setIsGenerating(false)
       return
     }
+
+    // Add selected model to form data
+    formData.append('model', selectedModel)
 
     try {
       const response = await fetch('/api/generate-image', {
@@ -91,6 +103,26 @@ export default function StudioPage() {
             )}
             <form onSubmit={handleSubmit} encType="multipart/form-data">
               <Input type="file" name="image" onChange={handleFileChange} accept="image/*" />
+              
+              <div className="mt-4">
+                <label className="text-sm font-medium mb-2 block">AI Model</label>
+                <Select value={selectedModel} onValueChange={setSelectedModel}>
+                  <SelectTrigger>
+                    <SelectValue placeholder="Select an AI model" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {AI_MODELS.map((model) => (
+                      <SelectItem key={model.value} value={model.value}>
+                        <div>
+                          <div className="font-medium">{model.label}</div>
+                          <div className="text-xs text-muted-foreground">{model.description}</div>
+                        </div>
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
+
               <Textarea name="prompt" className="mt-2" placeholder="Describe what you want to generate..." />
               <Button type="submit" className="mt-4 w-full" disabled={isGenerating}>
                 {isGenerating ? 'Generating...' : 'Generate'}

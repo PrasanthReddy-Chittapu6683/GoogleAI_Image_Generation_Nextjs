@@ -17,6 +17,7 @@ export async function POST(request: NextRequest) {
     const formData = await request.formData()
     const image = formData.get('image') as File
     const prompt = formData.get('prompt') as string
+    const model = formData.get('model') as string || 'gemini-2.5-flash-image-preview' // Default to Banana model
 
     if (!image || !prompt) {
       return NextResponse.json(
@@ -25,13 +26,27 @@ export async function POST(request: NextRequest) {
       )
     }
 
+    // Validate model selection
+    const validModels = [
+      'gemini-2.5-flash-image-preview',
+      'gemini-1.5-flash',
+      'gemini-1.5-pro'
+    ]
+    
+    if (!validModels.includes(model)) {
+      return NextResponse.json(
+        { error: 'Invalid model selected' },
+        { status: 400 }
+      )
+    }
+
     // Convert image to base64
     const imageBuffer = Buffer.from(await image.arrayBuffer())
     const base64 = imageBuffer.toString('base64')
 
-    // Generate image using Google Gemini
+    // Generate image using selected Google Gemini model
     const result = await generateText({
-      model: google('gemini-2.5-flash-image-preview'),
+      model: google(model),
       messages: [
         {
           role: 'user',
