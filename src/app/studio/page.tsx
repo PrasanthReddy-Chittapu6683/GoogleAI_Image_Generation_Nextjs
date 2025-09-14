@@ -91,12 +91,13 @@ export default function StudioPage() {
           </CardHeader>
           <CardContent>
             {preview && (
-              <div className="mb-4 relative w-full h-64">
+              <div className="mb-4">
                 <Image
                   src={preview}
                   alt="Preview"
-                  fill
-                  className="rounded-xl object-cover"
+                  width={500}
+                  height={400}
+                  className="rounded-xl w-full h-auto"
                   unoptimized
                 />
               </div>
@@ -138,13 +139,14 @@ export default function StudioPage() {
           <CardContent className="flex flex-col flex-1">
             <div className="p-4 border rounded-xl flex-1 flex items-center justify-center">
               {generatedImage ? (
-                <div>
-                  <div className="mb-4 relative w-full h-64">
+                <div className="text-center">
+                  <div className="mb-4">
                     <Image
                       src={generatedImage}
                       alt="Generated image"
-                      fill
-                      className="rounded-xl object-cover"
+                      width={500}
+                      height={400}
+                      className="rounded-xl w-full h-auto max-w-full"
                       unoptimized
                     />
                   </div>
@@ -157,7 +159,7 @@ export default function StudioPage() {
                   </a>
                 </div>
               ) : (
-                <div>
+                <div className="flex items-center justify-center h-64">
                   {isGenerating ? <Loader2Icon className="animate-spin" /> : 'No image generated yet'}
                 </div>
               )}
@@ -170,12 +172,13 @@ export default function StudioPage() {
           {history.map((item) => (
             <Card key={item.id}>
               <CardHeader>
-                <div className="relative w-full h-32">
+                <div className="w-full">
                   <Image
                     src={item.base64}
                     alt="Generated image"
-                    fill
-                    className="object-cover rounded"
+                    width={200}
+                    height={200}
+                    className="w-full h-auto rounded object-contain"
                     unoptimized
                   />
                 </div>
@@ -184,7 +187,7 @@ export default function StudioPage() {
                 <a
                   href={item.base64}
                   download={`generated-image-${Date.now()}.png`}
-                  className={buttonVariants({ variant: 'outline' })}
+                  className={buttonVariants({ variant: 'outline', size: 'sm' })}
                 >
                   Download
                 </a>
